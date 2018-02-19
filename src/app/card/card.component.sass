@@ -1,0 +1,158 @@
+#modalInfo
+	.modal-dialog
+		width: 900px
+		min-width: 900px
+	h5
+		font-size: 18px
+	ul
+		padding: 0
+		margin: 0
+	li
+		list-style: none
+		font-size: 13px
+		margin-top: 2px
+		font-weight: bold
+		span
+			color: #0b439e
+			text-decoration: underline
+			font-weight: normal
+		 
+.modal
+	background-color: rgba(0, 0, 0, 0.3)
+	overflow-y: auto
+
+h5.modal-title
+	text-align: left
+
+th
+	text-align: left
+	background-color: #eceeef
+	font-size: 12px
+	padding: 8px
+
+td
+	font-size: 12px
+	text-align: left
+	padding: 8px
+
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td
+	border: 1px solid #000!important
+
+.modal-body .table
+	margin-bottom: 10px
+
+.modal-header p
+	font-size: 15px
+	margin: 0
+	text-decoration: underline
+
+.modal
+	display: block
+
+.invisible
+	display: none
+
+.history label
+	font-size: 16px
+	margin: 0
+
+#modalInfo .history ul, #modalInfo .payHistory ul
+	padding-left: 20px
+	height: 150px
+	overflow-y: auto
+
+#modalInfo .history li, #modalInfo .payHistory li
+	color: #0b439e
+	cursor: pointer
+	font-weight: normal
+	list-style-type: disc
+	margin-top: 3px
+
+#modalInfo .history li p, #modalInfo .payHistory li div
+	color: #000
+	display: none
+	background-color: #fff
+	z-index: 10
+	border-radius: 5px
+	border: 1px solid #e5e5e5
+	width: 100%
+	padding: 8px
+	font-size: 13px
+
+#modalInfo .history li.active p
+	display: block
+
+#modalInfo .payHistory li div p
+	margin-bottom: 5px
+
+#modalInfo .history li p span
+	color: #000
+	text-decoration: underline
+	margin-bottom: 3px
+	display: block
+
+.history li:hover, .payHistory li:hover
+	color: #000
+
+#modalInfo .payHistory li.active div
+	display: block
+
+.recourse
+	margin-top: 15px
+	position: relative
+
+.recourse label
+	font-size: 14px
+
+.recourse select
+	margin-left: 20px
+	font-size: 13px
+
+.recourse textarea
+	display: block
+	width: 100%
+	min-height: 100px
+	padding: 10px
+	font-size: 14px
+	margin-top: 5px
+
+.recourse button
+	float: right
+	margin-top: 5px
+
+.history label
+	font-size: 16px
+	margin: 0
+
+.success
+	position: absolute
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	text-transform: uppercase
+	font-weight: 700
+	display: none
+	z-index: 5
+
+.success span
+	margin: auto
+	font-size: 18px
+	color: #000
+	font-weight: bold
+	text-decoration: none
+
+.success~*
+	transition: all .5s ease
+
+.success.active
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: -o-flex
+	display: flex
+
+.success.active~*
+	opacity: .5
+	-webkit-filter: blur(10px)
+	filter: blur(10px)

@@ -1,0 +1,212 @@
+<div *ngIf="done">
+<!-- Modal -->
+
+<div class="modal" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" [ngClass]="{invisible: visibility}">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><span id="fioModal">{{data.fio}}</span></h5>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Switch</th>
+                                    <th>Доступность</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data.nameswitch}}</td>
+                                    <td [style.color]="data.statusswitch==1?'#00f':'#f00'" style="font-weight:bold;text-decoration:underline;">{{data.statusswitch==1?'Доступен':'Не доступен'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Статус</th>
+                                    <th>Время в сети</th>
+                                    <th>Начало последней сессии</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data.onlineStatus}}</td>
+                                    <td>{{data.onlineTime}}</td>
+                                    <td>{{data.onlineFstart}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Полученный IP</th>
+                                    <th>MAC-адрес</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data.local_ip}}</td>
+                                    <td>{{data.local_mac}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Л/с</th>
+                                    <th>Договор</th>
+                                    <th>Дата добавления</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data.numdogovor}}</td>
+                                    <td>{{data.dogovor}}</td>
+                                    <td>{{data.add_date}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Тариф</th>
+                                    <th>Депозит</th>
+                                    <th>Кредит</th>
+                                    <th>Реальный IP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data.packet}}</td>
+                                    <td>{{data.deposit}}</td>
+                                    <td>{{data.credit}}</td>
+                                    <td id="real_ipModal">{{data.real_ip==1?data.framed_ip:'нет'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Дом. телефон</th>
+                                    <th>Моб. телефон</th>
+                                    <th>Телефон смс</th>
+                                    <th>e-mail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data.phone}}</td>
+                                    <td>{{data.mob_tel}}</td>
+                                    <td>{{data.sms_tel}}</td>
+                                    <td>{{data.email}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </ul>
+                </div>
+                <div class="col-md-6">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Адрес</th>
+                                <th>Доступ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{data.settlementname + ', ' + data.lane + ' ' + data.house}}</td>
+                                <td [style.color]="data.blocked==0?'#00f':'#f00'" style="font-weight:bold;text-decoration:underline;">{{data.blocked==0?'Разрешён':'Заблокирован'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Логин</th>
+                                <th>Пароль</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{data.user}}</td>
+                                <td>{{data.password}}</td>
+                            </tr>
+                        </tbody>
+                    </table>                  
+
+                    <tabs (onPay)="callPay()">
+                        <tab [tabTitle]="'История обращений'">
+                            <div class="history">
+                                <ul>
+                                    <li *ngFor="let trable of data.trable" (click)="trableMessage(trable.id, trable); showMessage($event);">
+                                        {{time(trable.dt) + ' - ' + trable.reason}}
+                                        <p>
+                                            <span>{{timeHour(trable.dt)}}</span>
+                                            {{trable.message}}
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </tab>
+
+                        <tab [tabTitle]="'История платежей'">
+                            <div class="payHistory">
+                                <ul>
+                                    <li *ngFor="let pay of data.pay" (click)="showMessage($event);">
+                                        {{pay.date}}
+                                        <div>
+                                            <p>Сумма: <span>{{pay.summa}} грн</span></p>
+                                            <p>Назначение: <span>{{pay.typename}}</span></p>
+                                            <p>Комментарий: <span>{{pay.comment}}</span></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </tab>
+                    </tabs>
+
+                    <form class="recourse" #f>
+                        <div class="success" [class.active]="success" >
+                            <span>Запись сохранена!</span>
+                        </div>
+                        <label>Причина обращения:</label>
+                        <select name="reason" [(ngModel)]="reason">
+                            <option value="Причина №1">Причина №1</option>
+                            <option value="Причина №2">Причина №2</option>
+                            <option value="Причина №3">Причина №3</option>
+                            <option value="Причина №4">Причина №4</option>
+                            <option value="Причина №5">Причина №5</option>
+                            <option value="Причина №6">Причина №6</option>
+                        </select>
+                        <textarea name="message" [(ngModel)]="message"></textarea>
+                        <button class="btn btn-primary" (click)="addTrable(reason, message)">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="toggle()">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
